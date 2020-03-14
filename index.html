@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Graticule</title>
+	<link rel="stylesheet" type="text/css" href="lib/Cesium/Widgets/CesiumWidget/CesiumWidget.css"/>
+    <script src="lib/Cesium/Cesium.js"></script>
+    <script src="Graticule.js"></script>
+    <style>
+        #cesiumContainer {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body onload="start()">
+
+    <div id="cesiumContainer"></div>
+    
+<script>
+
+    function start() {
+		var imageryProvider = new Cesium.UrlTemplateImageryProvider({
+		        url: 'http://mt{s}.google.cn/vt/lyrs=s&hl=zh-CN&gl=CN&x={x}&y={y}&z={z}&s=Gali',
+		        subdomains: ['1', '2', '3'],
+		        maximumLevel: 18
+		    });
+		
+		
+		//构造地球
+		var viewer = new Cesium.Viewer("cesiumContainer", {
+		    animation: false,        //是否创建动画小器件，左下角仪表
+		    timeline: false,         //是否显示时间线控件
+		    geocoder: false,         //是否显示地名查找控件
+		    baseLayerPicker: false,  //是否显示图层选择控件
+		    imageryProvider: imageryProvider
+		});
+        
+        var scene = viewer.scene;
+        var graticule = new Graticule({
+            tileWidth: 512,
+            tileHeight: 512,
+            numLines: 10,
+			fontColor:  Cesium.Color.WHITE, // 文字颜色
+			weight:  0.8, // 线宽度|默认0.8
+			zoomInterval: [
+			    Cesium.Math.toRadians(0.05),
+			    Cesium.Math.toRadians(0.1),
+			    Cesium.Math.toRadians(0.2),
+			    Cesium.Math.toRadians(0.5),
+			    Cesium.Math.toRadians(1.0),
+			    Cesium.Math.toRadians(2.0),
+			    Cesium.Math.toRadians(5.0),
+			    Cesium.Math.toRadians(10.0)
+			]// 不同地图缩放级别显示网格的间隔
+        }, scene);
+        viewer.scene.imageryLayers.addImageryProvider(graticule);
+        graticule.setVisible(!graticule.isVisible());
+
+    }
+
+</script>
+</body>
+</html>
