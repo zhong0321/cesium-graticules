@@ -168,10 +168,10 @@ var Graticule = (function() {
          this._labels.add({
              position : this._ellipsoid.cartographicToCartesian(new Cesium.Cartographic(lng, lat, 10.0)),
              text : text,
-             font : 'normal',
+             font : '16px normal',//文字字体
              fillColor : this._fontColor,
              outlineColor : 'white',
-             style : Cesium.LabelStyle.FILL,
+             style : Cesium.LabelStyle.FILL,//文字显示风格
              pixelOffset : new Cesium.Cartesian2(5, top ? 5 : -5),
              eyeOffset : Cesium.Cartesian3.ZERO,
              horizontalOrigin : Cesium.HorizontalOrigin.RIGHT,
@@ -230,7 +230,14 @@ var Graticule = (function() {
             this._polylines.add({
                 positions : ellipsoid.cartographicArrayToCartesianArray(path),
                 width: this._weight,
-
+				material :  new Cesium.Material({
+                    fabric : {
+                        type : 'Color',
+                        uniforms : {
+                            color : this._color
+                        }
+                    }
+                })
             });
 
 
@@ -250,6 +257,14 @@ var Graticule = (function() {
             this._polylines.add({
                 positions : ellipsoid.cartographicArrayToCartesianArray(path),
                 width: this._weight,
+				material :  new Cesium.Material({
+                    fabric : {
+                        type : 'Color',
+                        uniforms : {
+                            color : this._color
+                        }
+                    }
+                })
             });
             var degLat = Cesium.Math.toDegrees(lat);
             this.makeLabel(longitudeText, lat, this._sexagesimal ? this._decToSex(degLat) : degLat.toFixed(gridPrecision(dLat)), true);

@@ -35,9 +35,7 @@
 		        url: 'http://mt{s}.google.cn/vt/lyrs=s&hl=zh-CN&gl=CN&x={x}&y={y}&z={z}&s=Gali',
 		        subdomains: ['1', '2', '3'],
 		        maximumLevel: 18
-		    });
-		
-		
+		});
 		//构造地球
 		var viewer = new Cesium.Viewer("cesiumContainer", {
 		    animation: false,        //是否创建动画小器件，左下角仪表
@@ -52,6 +50,7 @@
             tileWidth: 512,
             tileHeight: 512,
             numLines: 10,
+			color:Cesium.Color.GREEN,//线颜色
 			fontColor:  Cesium.Color.WHITE, // 文字颜色
 			weight:  0.8, // 线宽度|默认0.8
 			zoomInterval: [
